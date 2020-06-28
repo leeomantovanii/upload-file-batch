@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * DataProvider responsável por prover acesso ao repositório que realiza as operações na tabela do log
+ *
+ * @author Leonardo
+ */
 @Component
 @RequiredArgsConstructor
 public class LogDataProvider implements LogGateway {

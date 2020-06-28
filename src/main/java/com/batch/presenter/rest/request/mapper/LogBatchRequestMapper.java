@@ -15,6 +15,12 @@ import java.io.Reader;
 @Mapper(componentModel = "spring")
 public interface LogBatchRequestMapper {
 
+    /**
+     * Método responsável por converter MultipartFile em Reader
+     * @param fileLog
+     * @return
+     * @throws IOException
+     */
     default Reader requestToCore(MultipartFile fileLog) throws IOException {
         return new InputStreamReader((fileLog.getInputStream()));
     }

@@ -15,6 +15,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface LogMapper {
 
+    /**
+     * Método responsável por converter objetos do tipo core em table
+     * @param listLog
+     * @return
+     */
     default List<LogTable> coreToTable(List<DadosLog> listLog) {
         List<LogTable> retorno = new ArrayList<>();
 
@@ -27,9 +32,6 @@ public interface LogMapper {
                             .request(log.getRequest())
                             .status(log.getStatus())
                             .build())
-//                    .ip(log.getIp())
-//                    .request(log.getRequest())
-//                    .status(log.getStatus())
                     .build());
         });
 

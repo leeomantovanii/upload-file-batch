@@ -37,7 +37,7 @@ public class LogBatchController {
     public ResponseEntity inserirLogBatch(@RequestParam("arquivoLog") MultipartFile arquivoLog) {
 
         try {
-            inserirLogBatchUseCase.lerArquivo(mapper.requestToCore(arquivoLog));
+            inserirLogBatchUseCase.processarArquivo(mapper.requestToCore(arquivoLog));
         } catch (IOException e) {
             e.printStackTrace();
         }

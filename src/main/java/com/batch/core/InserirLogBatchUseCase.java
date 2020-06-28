@@ -27,7 +27,13 @@ public class InserirLogBatchUseCase {
 
     private final LogGateway gateway;
 
-    public void lerArquivo(Reader reader) {
+    /**
+     * Método responsável por processar o arquivo de log, salvar as informações no DadosLog e chamar o gateway para inserir as informações.
+     * É realizado a quebra dos objetos parametrizado (200), para não ter problemas de memória.
+     *
+     * @param reader
+     */
+    public void processarArquivo(Reader reader) {
         try {
             CSVParser parser = new CSVParserBuilder()
                     .withSeparator('|')
@@ -41,7 +47,7 @@ public class InserirLogBatchUseCase {
             List<DadosLog> listDadosLog = new ArrayList<>();
             while ((record = csvReader.readNext()) != null) {
                 listDadosLog.add(montaObjetoDadosLog(record));
-                if (listDadosLog.size() == 200 ){
+                if (listDadosLog.size() == 200) {
                     gateway.inserirLogBatch(listDadosLog);
                     listDadosLog.clear();
                 }
