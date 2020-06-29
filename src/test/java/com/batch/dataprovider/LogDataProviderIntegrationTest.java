@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureDataJpa
 @ActiveProfiles("sandbox")
 @Transactional
-class LogDataProviderTest {
+class LogDataProviderIntegrationTest {
 
     @Autowired
     private LogDataProvider dataProvider;
