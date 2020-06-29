@@ -79,6 +79,10 @@
             <version>${uk.co.jemos.podam.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
