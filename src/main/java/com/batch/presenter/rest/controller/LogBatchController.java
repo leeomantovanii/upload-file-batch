@@ -1,16 +1,18 @@
 package com.batch.presenter.rest.controller;
 
 import com.batch.core.InserirLogBatchUseCase;
+import com.batch.core.InserirLogUseCase;
+import com.batch.core.models.DadosLog;
+import com.batch.presenter.rest.request.LogRequest;
 import com.batch.presenter.rest.request.mapper.LogBatchRequestMapper;
+import com.batch.presenter.rest.response.LogResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -20,7 +22,7 @@ import java.io.IOException;
  */
 
 @RestController
-@RequestMapping("/v1/logBatch")
+@RequestMapping("/v1/log")
 @RequiredArgsConstructor
 public class LogBatchController {
 
@@ -28,20 +30,36 @@ public class LogBatchController {
 
     private final InserirLogBatchUseCase inserirLogBatchUseCase;
 
+    private final InserirLogUseCase inserirLogUseCase;
+
     /**
      * Serviço responsável por fazer inserção em batch
+     *
      * @param arquivoLog
      * @return
      */
-    @PostMapping
+    @PostMapping (path = "/batch")
     public ResponseEntity inserirLogBatch(@RequestParam("arquivoLog") MultipartFile arquivoLog) {
 
         try {
-            inserirLogBatchUseCase.processarArquivo(mapper.requestToCore(arquivoLog));
+            inserirLogBatchUseCase.processarArquivo(mapper.requestBatchToCore(arquivoLog));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    /**
+     * Serviço responsável por fazer inserção de log manual
+     * @param request
+     * @return
+     */
+    @PostMapping
+    public ResponseEntity<LogResponse> inserirLog(@RequestBody @Valid LogRequest request) {
+
+        DadosLog retorno = inserirLogUseCase.insereLog(mapper.requestToCore(request));
+
+        return new ResponseEntity(mapper.coreToResponse(retorno), HttpStatus.OK);
     }
 }

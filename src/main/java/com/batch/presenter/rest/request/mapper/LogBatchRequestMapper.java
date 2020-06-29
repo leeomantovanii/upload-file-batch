@@ -1,5 +1,8 @@
 package com.batch.presenter.rest.request.mapper;
 
+import com.batch.core.models.DadosLog;
+import com.batch.presenter.rest.request.LogRequest;
+import com.batch.presenter.rest.response.LogResponse;
 import org.mapstruct.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,11 +20,27 @@ public interface LogBatchRequestMapper {
 
     /**
      * Método responsável por converter MultipartFile em Reader
+     *
      * @param fileLog
      * @return
      * @throws IOException
      */
-    default Reader requestToCore(MultipartFile fileLog) throws IOException {
+    default Reader requestBatchToCore(MultipartFile fileLog) throws IOException {
         return new InputStreamReader((fileLog.getInputStream()));
     }
+
+    /**
+     * Método responsável por converter dados de requeste em core
+     *
+     * @param request
+     * @return
+     */
+    DadosLog requestToCore(LogRequest request);
+
+    /**
+     * Método responsável por converter dados de core em response
+     * @param core
+     * @return
+     */
+    LogResponse coreToResponse(DadosLog core);
 }

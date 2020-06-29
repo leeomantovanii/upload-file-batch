@@ -24,7 +24,12 @@ public class LogDataProvider implements LogGateway {
 
     @Override
     public void inserirLogBatch(List<DadosLog> listLog) {
-        repository.saveAll(mapper.coreToTable(listLog));
+        repository.saveAll(mapper.listCoreTolistTable(listLog));
 
+    }
+
+    @Override
+    public DadosLog inserirLog(DadosLog log) {
+        return mapper.tableToCore(repository.save(mapper.coreToTable(log)));
     }
 }

@@ -33,9 +33,9 @@ class LogDataProviderTest {
     private LogRepository repository;
 
     @Test
-    @DisplayName("Testa inserção de dados na tabela de log")
+    @DisplayName("Testa inserção de dados batch na tabela de log")
     @Sql("classpath:sql/log/PopulaTableLog.sql")
-    public void teste() {
+    public void testeInsercaoBatch() {
         List<DadosLog> dadosLog = Arrays.asList(Podam.MOCKS.manufacturePojo(DadosLog.class));
 
         List<LogTable> antesDoInsert = repository.findAll();
@@ -44,6 +44,23 @@ class LogDataProviderTest {
 
         assertThat(antesDoInsert.size()).isEqualTo(1);
         assertThat(depoisDoInsert.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    @DisplayName("Testa inserção de log individual. Verifica se o objeto enviado é o mesmo retornado pelo save()")
+    @Sql("classpath:sql/log/PopulaTableLog.sql")
+    public void testeInsercaoLog() {
+        DadosLog dadosLog = Podam.MOCKS.manufacturePojo(DadosLog.class);
+
+        List<LogTable> antesDoInsert = repository.findAll();
+        DadosLog retorno = dataProvider.inserirLog(dadosLog);
+        List<LogTable> depoisDoInsert = repository.findAll();
+
+        assertThat(antesDoInsert.size()).isEqualTo(1);
+        assertThat(depoisDoInsert.size()).isEqualTo(2);
+        assertThat(retorno).isEqualTo(dadosLog);
+
 
     }
 }

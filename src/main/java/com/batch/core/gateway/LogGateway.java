@@ -18,4 +18,11 @@ public interface LogGateway {
      */
     void inserirLogBatch(List<DadosLog> listLog);
 
+    /**
+     * Método responsável por realizar a inserção de log
+     * @param log
+     * @return
+     */
+    DadosLog inserirLog(DadosLog log);
+
 }

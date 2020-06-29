@@ -1,7 +1,11 @@
 package com.batch.presenter.rest.controller;
 
 import com.batch.core.InserirLogBatchUseCase;
+import com.batch.core.InserirLogUseCase;
+import com.batch.core.models.DadosLog;
+import com.batch.presenter.rest.request.LogRequest;
 import com.batch.presenter.rest.request.mapper.LogBatchRequestMapper;
+import com.batch.presenter.rest.response.LogResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,19 +36,39 @@ class LogBatchControllerTest {
     private LogBatchRequestMapper mapper;
 
     @Mock
-    private InserirLogBatchUseCase useCase;
+    private InserirLogBatchUseCase inserirLogBatchUseCase;
+
+    @Mock
+    private InserirLogUseCase inserirLogUseCase;
 
     @Test
     @DisplayName("Verifica se o serviço esta chamando a camada de negocio (useCase)")
-    void verificaChamadaCamadaNegocio() throws IOException {
+    void verificaChamadaCamadaNegocioinserirLogBatch() throws IOException {
         MultipartFile fileLog = Podam.MOCKS.manufacturePojo(MultipartFile.class);
         Reader reader = Podam.MOCKS.manufacturePojo(Reader.class);
 
-        when(mapper.requestToCore(fileLog)).thenReturn(reader);
+        when(mapper.requestBatchToCore(fileLog)).thenReturn(reader);
 
         controller.inserirLogBatch(fileLog);
 
-        verify(useCase, times(1)).processarArquivo(reader);
+        verify(inserirLogBatchUseCase, times(1)).processarArquivo(reader);
+
+    }
+
+    @Test
+    @DisplayName("Verifica se o serviço esta chamando a camada de negocio (useCase) ao inserir log manual")
+    void verificaChamadaCamadaNegocioinserirLog() throws IOException {
+        LogRequest request = Podam.MOCKS.manufacturePojo(LogRequest.class);
+        DadosLog core = Podam.MOCKS.manufacturePojo(DadosLog.class);
+        LogResponse response = Podam.MOCKS.manufacturePojo(LogResponse.class);
+
+        when(mapper.requestToCore(request)).thenReturn(core);
+        when(mapper.coreToResponse(core)).thenReturn(response);
+        when(inserirLogUseCase.insereLog(core)).thenReturn(core);
+
+        controller.inserirLog(request);
+
+        verify(inserirLogUseCase, times(1)).insereLog(core);
 
     }
 

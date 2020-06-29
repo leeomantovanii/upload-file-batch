@@ -16,11 +16,12 @@ import java.util.List;
 public interface LogMapper {
 
     /**
-     * Método responsável por converter objetos do tipo core em table
+     * Método responsável por converter objetos do tipo listCore em listTable
+     *
      * @param listLog
      * @return
      */
-    default List<LogTable> coreToTable(List<DadosLog> listLog) {
+    default List<LogTable> listCoreTolistTable(List<DadosLog> listLog) {
         List<LogTable> retorno = new ArrayList<>();
 
         listLog.forEach(log -> {
@@ -36,5 +37,38 @@ public interface LogMapper {
         });
 
         return retorno;
+    }
+
+    /**
+     * Método responsável por converter objeto do tipo core em table
+     *
+     * @param log
+     * @return
+     */
+    default LogTable coreToTable(DadosLog log) {
+        return LogTable.builder()
+                .id(LogId.builder()
+                        .data(log.getData())
+                        .userAgent(log.getUserAgent())
+                        .ip(log.getIp())
+                        .request(log.getRequest())
+                        .status(log.getStatus())
+                        .build())
+                .build();
+    }
+
+    /**
+     * Método responsável por converter objeto do tipo table em core
+     *
+     * @return
+     */
+    default DadosLog tableToCore(LogTable table) {
+        return DadosLog.builder()
+                .data(table.getId().getData())
+                .userAgent(table.getId().getUserAgent())
+                .ip(table.getId().getIp())
+                .request(table.getId().getRequest())
+                .status(table.getId().getStatus())
+                .build();
     }
 }
