@@ -4,7 +4,6 @@ import com.batch.core.anotacao.UseCase;
 import com.batch.core.gateway.LogGateway;
 import com.batch.core.models.DadosLog;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 /**
  * UseCase responsável por possuir a regra de negocio da inserção do log
@@ -17,6 +16,12 @@ public class InserirLogUseCase {
 
     private final LogGateway gateway;
 
+    /**
+     * Método responsável por chamar o metodo responsável por inserir log manual
+     *
+     * @param log
+     * @return
+     */
     public DadosLog insereLog(DadosLog log) {
         return gateway.inserirLog(log);
     }

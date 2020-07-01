@@ -12,7 +12,7 @@ import teste.Podam;
 
 import java.io.IOException;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,13 +30,13 @@ class InserirLogUseCaseTest {
     private LogGateway gateway;
 
     @Test
-    @DisplayName("Verifica se a useCase esta chamando o dataProvider corretamente")
+    @DisplayName("Verifica se a useCase esta chamando o dataProvider corretamente e se o retorno é o esperado")
     void verificaChamadaDataProvider() throws IOException {
         DadosLog log = Podam.MOCKS.manufacturePojo(DadosLog.class);
-
         when(gateway.inserirLog(log)).thenReturn(log);
+        DadosLog retorno = useCase.insereLog(log);
 
-        useCase.insereLog(log);
+        assertThat(retorno).isEqualTo(log);
         verify(gateway, times(1)).inserirLog(log);
     }
 }
