@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 @Data
 public class LogResponse {
 
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("data")
     private LocalDateTime data;
 

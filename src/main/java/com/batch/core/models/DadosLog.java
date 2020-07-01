@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Data
 public class DadosLog {
 
+    private String id;
+
     private LocalDateTime data;
 
     private String ip;
