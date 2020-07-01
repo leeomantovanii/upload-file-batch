@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 
 /**
  * Mapper responsável por converter objeto do tipo request em core e objeto do tipo core em response
@@ -43,4 +44,12 @@ public interface LogBatchRequestMapper {
      * @return
      */
     LogResponse coreToResponse(DadosLog core);
+
+    /**
+     * Método responsável por converter uma list de core em list de response
+     * @param core
+     * @return
+     */
+    List<LogResponse> listCoreToListResponse(List<DadosLog> core);
+
 }

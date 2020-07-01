@@ -1,10 +1,9 @@
 package com.batch.dataprovider.mapper;
 
 import com.batch.core.models.DadosLog;
-import com.batch.dataprovider.entity.LogId;
 import com.batch.dataprovider.entity.LogTable;
 import org.mapstruct.Mapper;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -21,23 +20,7 @@ public interface LogMapper {
      * @param listLog
      * @return
      */
-    default List<LogTable> listCoreTolistTable(List<DadosLog> listLog) {
-        List<LogTable> retorno = new ArrayList<>();
-
-        listLog.forEach(log -> {
-            retorno.add(LogTable.builder()
-                    .id(LogId.builder()
-                            .data(log.getData())
-                            .userAgent(log.getUserAgent())
-                            .ip(log.getIp())
-                            .request(log.getRequest())
-                            .status(log.getStatus())
-                            .build())
-                    .build());
-        });
-
-        return retorno;
-    }
+    List<LogTable> listCoreTolistTable(List<DadosLog> listLog);
 
     /**
      * Método responsável por converter objeto do tipo core em table
@@ -45,30 +28,19 @@ public interface LogMapper {
      * @param log
      * @return
      */
-    default LogTable coreToTable(DadosLog log) {
-        return LogTable.builder()
-                .id(LogId.builder()
-                        .data(log.getData())
-                        .userAgent(log.getUserAgent())
-                        .ip(log.getIp())
-                        .request(log.getRequest())
-                        .status(log.getStatus())
-                        .build())
-                .build();
-    }
+    LogTable coreToTable(DadosLog log);
 
     /**
      * Método responsável por converter objeto do tipo table em core
      *
      * @return
      */
-    default DadosLog tableToCore(LogTable table) {
-        return DadosLog.builder()
-                .data(table.getId().getData())
-                .userAgent(table.getId().getUserAgent())
-                .ip(table.getId().getIp())
-                .request(table.getId().getRequest())
-                .status(table.getId().getStatus())
-                .build();
-    }
+    DadosLog tableToCore(LogTable table);
+
+    /**
+     * Método responsável por converter objeto do tipo ListTable em ListCore
+     * @param listTable
+     * @return
+     */
+    List<DadosLog> listTableToListCore(List<LogTable> listTable);
 }
