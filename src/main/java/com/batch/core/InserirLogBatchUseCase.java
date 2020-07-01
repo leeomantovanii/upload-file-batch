@@ -1,5 +1,6 @@
 package com.batch.core;
 
+import com.batch.core.anotacao.UseCase;
 import com.batch.core.gateway.LogGateway;
 import com.batch.core.models.DadosLog;
 import com.opencsv.CSVParser;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Leonardo
  */
-@Component
+@UseCase
 @RequiredArgsConstructor
 public class InserirLogBatchUseCase {
 
