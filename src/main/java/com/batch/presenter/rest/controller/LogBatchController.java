@@ -55,7 +55,7 @@ public class LogBatchController {
             e.printStackTrace();
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LogBatchController {
 
         deletarLogUseCase.deletarLog(idLog);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -98,4 +98,5 @@ public class LogBatchController {
 
         return new ResponseEntity(mapper.coreToResponse(retorno), HttpStatus.OK);
     }
+
 }

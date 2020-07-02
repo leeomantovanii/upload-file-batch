@@ -65,7 +65,7 @@ class LogBatchControllerTest {
         ResponseEntity retorno = controller.inserirLogBatch(fileLog);
 
         verify(inserirLogBatchUseCase, times(1)).processarArquivo(reader);
-        assertThat(retorno.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(retorno.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
     }
 
@@ -92,7 +92,7 @@ class LogBatchControllerTest {
     void testaDeletarLog() {
         ResponseEntity retorno = controller.deletarLog("10");
         verify(deletarLogUseCase, times(1)).deletarLog("10");
-        assertThat(retorno.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(retorno.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
